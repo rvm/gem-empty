@@ -13,6 +13,14 @@ describe EmptyCommand do
     EmptyCommand.new
   end
 
+  it "has some strings" do
+    subject.arguments.class.must_equal(String)
+    subject.usage.class.must_equal(String)
+    subject.defaults_str.class.must_equal(String)
+    subject.description.class.must_equal(String)
+    subject.program_name.class.must_equal(String)
+  end
+
   describe "wrappers" do
     before do
       file = Tempfile.new('command-wrappers')
