@@ -1,13 +1,13 @@
 language: ruby
 rvm:
   - jruby
+  - rbx
   - ruby-head
   - 1.8.7
   - 1.9.2
   - 1.9.3
   - 2.0.0
   - 2.1.0
-  - rbx
 notifications:
   irc:
     channels:
@@ -17,6 +17,4 @@ notifications:
       - mpapis@gmail.com
     on_failure: change
 matrix:
-  allow_failures:
-    - rvm: rbx
   fast_finish: true

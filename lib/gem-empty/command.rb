@@ -5,9 +5,7 @@ require 'rubygems/version'
 
 class EmptyCommand < Gem::Command
   def initialize
-    super 'empty', 'remove all gems from current GEM_HOME.'
-    @failed = {}
-    @worked = []
+    super 'empty', 'Remove all gems from current GEM_HOME.'
   end
 
   def arguments # :nodoc:
