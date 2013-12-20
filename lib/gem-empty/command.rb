@@ -1,3 +1,4 @@
+require 'gem-empty/specification'
 require 'rubygems/command_manager'
 require 'rubygems/uninstaller'
 require 'rubygems/version'
@@ -44,16 +45,9 @@ private
 
   def gem_dir_specs
     @gem_dir_specs ||=
-    installed_gems.select do |spec|
+    GemEmpty::Specification.installed_gems.select do |spec|
       File.exists?( File.join( Gem.dir, 'gems', spec.full_name ) )
     end
   end
 
-  def installed_gems
-    if Gem::VERSION > '1.8' then
-      Gem::Specification.to_a
-    else
-      Gem.source_index.map{|name,spec| spec}
-    end
-  end
 end

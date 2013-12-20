@@ -1,14 +1,14 @@
 module GemEmpty
   module Specification
+    def self.installed_gems
+      if Gem::VERSION > '1.8' then
+        Gem::Specification.to_a
+      else
+        Gem.source_index.map{|name,spec| spec}
+      end
+    end
     def self.find(name = "gem-empty")
-      @gem_empty_spec ||=
-        if Gem::Specification.respond_to?(:find_by_name)
-          Gem::Specification.find_by_name(name)
-        else
-          Gem.source_index.find_name(name).last
-        end
-    rescue Gem::LoadError
-      nil
+      @gem_empty_spec ||= installed_gems.find{|spec| spec.name == name}
     end
     def self.version
       find ? find.version.to_s : nil
