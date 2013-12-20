@@ -37,7 +37,7 @@ DOC
          Gem::GemNotInHomeException,
          Gem::FilePermissionError => e
 
-    say "\t#{e.class}: #{e.message}"
+    alert_error "#{e.class}: #{e.message}"
   end
 
 private

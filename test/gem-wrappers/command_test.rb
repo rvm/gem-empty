@@ -1,6 +1,8 @@
 require 'test_helper'
 require 'gem-empty/command'
 require 'rubygems/installer'
+require 'rubygems/user_interaction'
+require 'rubygems/mock_gem_ui'
 
 class Gem::Specification
   def self.remove_spec spec
@@ -9,6 +11,8 @@ class Gem::Specification
 end
 
 describe EmptyCommand do
+  include Gem::DefaultUserInteraction
+
   subject do
     EmptyCommand.new
   end
@@ -27,9 +31,12 @@ describe EmptyCommand do
       @test_path = file.path
       file.close
       file.unlink
+      @ui = Gem::MockGemUi.new
       @found_rake = Gem::Specification.find_by_name('rake')
       installer = Gem::Installer.new(@found_rake.cache_file, :version => @found_rake.version, :install_dir => @test_path)
-      installer.install
+      use_ui @ui do
+        installer.install
+      end
       subject.instance_variable_set(:@gem_dir_specs, [installer.spec])
     end
 
@@ -37,11 +44,32 @@ describe EmptyCommand do
       FileUtils.rm_rf(@test_path)
     end
 
-    it "regenerates wrappers" do
+    it "removes gems" do
       File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(true)
-      subject.execute(:install_dir => @test_path)
+      use_ui @ui do
+        subject.execute(:install_dir => @test_path)
+      end
       File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(false)
+      @ui.output.must_equal(<<-EXPECTED)
+Removing rake
+Successfully uninstalled rake-10.1.0
+EXPECTED
+      @ui.error.must_equal("")
     end
+
+    it "fails gems" do
+      File.chmod(0500, File.join(@test_path, "bin") )
+      use_ui @ui do
+        subject.execute(:install_dir => @test_path)
+      end
+      File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(true)
+      File.chmod(0755, File.join(@test_path, "bin") )
+      @ui.output.must_equal("")
+      @ui.error.must_match(
+        /ERROR:  Gem::FilePermissionError: You don't have write permissions for the .* directory/
+      )
+    end
+
   end
 
   it "finds gem executables" do
