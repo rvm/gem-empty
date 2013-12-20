@@ -50,10 +50,9 @@ describe EmptyCommand do
         subject.execute(:install_dir => @test_path)
       end
       File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(false)
-      @ui.output.must_equal(<<-EXPECTED)
-Removing rake
-Successfully uninstalled rake-10.1.0
-EXPECTED
+      @ui.output.must_match(
+        /Removing rake\nSuccessfully uninstalled rake-/
+      )
       @ui.error.must_equal("")
     end
 
