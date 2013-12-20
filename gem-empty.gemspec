@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version = GemEmpty::VERSION
   s.authors = ["Michal Papis"]
   s.email = ["mpapis@gmail.com"]
-  s.homepage = "https://github.com/rvm/gem-wrappers"
+  s.homepage = "https://github.com/rvm/gem-empty"
   s.summary = "Gem command to remove all gems from current GEM_HOME."
   s.license = "Apache 2.0"
   s.files = `git ls-files`.split("\n")

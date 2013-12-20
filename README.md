@@ -1,4 +1,4 @@
-# Gem wrappers
+# Gem empty
 
 [![Gem Version](https://badge.fury.io/rb/gem-empty.png)](http://rubygems.org/gems/gem-empty)
 [![Code Climate](https://codeclimate.com/github/rvm/gem-empty.png)](https://codeclimate.com/github/rvm/gem-empty)
