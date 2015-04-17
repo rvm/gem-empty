@@ -34,6 +34,10 @@ describe EmptyCommand do
       @ui = Gem::MockGemUi.new
       @found_rake = Gem::Specification.find_by_name('rake')
       installer = Gem::Installer.new(@found_rake.cache_file, :version => @found_rake.version, :install_dir => @test_path)
+      bundler_git_gems_path = File.join(@test_path,'bundler','gems')
+      FileUtils.mkdir_p(bundler_git_gems_path)
+      @git_gem_file = File.join(bundler_git_gems_path, 'git-test')
+      FileUtils.touch(@git_gem_file)
       use_ui @ui do
         installer.install
       end
@@ -53,6 +57,15 @@ describe EmptyCommand do
       @ui.output.must_match(
         /Removing rake\nSuccessfully uninstalled rake-/
       )
+      @ui.error.must_equal("")
+    end
+
+    it "removes git gems installed via bundler" do
+      File.exist?(@git_gem_file).must_equal(true)
+      use_ui @ui do
+        subject.execute(:install_dir => @test_path)
+      end
+      File.exist?(@git_gem_file).must_equal(false)
       @ui.error.must_equal("")
     end
 
