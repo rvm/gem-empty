@@ -4,8 +4,11 @@ require 'rubygems/uninstaller'
 require 'rubygems/version'
 
 class EmptyCommand < Gem::Command
+  attr_accessor :options
+
   def initialize
     super 'empty', 'Remove all gems from current GEM_HOME.'
+    self.options = { :install_dir => Gem.dir, :force => true, :executables => true }
   end
 
   def arguments # :nodoc:
@@ -26,8 +29,8 @@ Remove all gems from current 'GEM_HOME'.
 DOC
   end
 
-  def execute(options = {})
-    options = {:force => true, :executables => true }.merge(options)
+  def execute(opts = {})
+    self.options = options.merge(opts)
     uninstaller = Gem::Uninstaller.new(nil, options)
     uninstaller.remove_all(gem_dir_specs)
 
@@ -44,7 +47,7 @@ private
   def gem_dir_specs
     @gem_dir_specs ||=
     GemEmpty::Specification.installed_gems.select do |spec|
-      File.exists?( File.join( Gem.dir, 'gems', spec.full_name ) )
+      File.exists?( File.join( options[:install_dir], 'gems', spec.full_name ) )
     end
   end
 
