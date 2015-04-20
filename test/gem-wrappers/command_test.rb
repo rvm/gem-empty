@@ -85,7 +85,9 @@ describe EmptyCommand do
   end
 
   it "finds gem executables" do
-    subject.send(:gem_dir_specs).map{|spec| spec.name}.must_include('minitest')
+    subject.stub :options, {:install_dir => Gem.dir } do
+      subject.send(:gem_dir_specs).map{|spec| spec.name}.must_include('minitest')
+    end
   end
 
 end
