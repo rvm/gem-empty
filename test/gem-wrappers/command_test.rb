@@ -70,12 +70,12 @@ describe EmptyCommand do
     end
 
     it "fails gems" do
-      File.chmod(0500, File.join(@test_path, "bin") )
+      File.chmod(0500, File.join(@test_path) )
       use_ui @ui do
         subject.execute(:install_dir => @test_path)
       end
-      File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(true)
-      File.chmod(0755, File.join(@test_path, "bin") )
+      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(true)
+      File.chmod(0755, File.join(@test_path) )
       @ui.output.must_equal("")
       @ui.error.must_match(
         /ERROR:  Gem::FilePermissionError: You don't have write permissions for the .* directory/
