@@ -32,8 +32,8 @@ describe EmptyCommand do
       file.close
       file.unlink
       @ui = Gem::MockGemUi.new
-      @found_rake = Gem::Specification.find_by_name('rake')
-      installer = Gem::Installer.new(@found_rake.cache_file, :version => @found_rake.version, :install_dir => @test_path)
+      @found_minitest = Gem::Specification.find_by_name('minitest')
+      installer = Gem::Installer.new(@found_minitest.cache_file, :version => @found_minitest.version, :install_dir => @test_path)
       bundler_git_gems_path = File.join(@test_path,'bundler','gems')
       FileUtils.mkdir_p(bundler_git_gems_path)
       @git_gem_file = File.join(bundler_git_gems_path, 'git-test')
@@ -49,13 +49,13 @@ describe EmptyCommand do
     end
 
     it "removes gems" do
-      File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(true)
+      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(true)
       use_ui @ui do
         subject.execute(:install_dir => @test_path)
       end
-      File.exist?(File.join(@test_path, "gems", @found_rake.full_name)).must_equal(false)
+      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(false)
       @ui.output.must_match(
-        /Removing rake\nSuccessfully uninstalled rake-/
+        /Successfully uninstalled minitest-/
       )
       @ui.error.must_equal("")
     end
