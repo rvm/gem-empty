@@ -25,9 +25,9 @@ describe EmptyCommand do
     subject.program_name.class.must_equal(String)
   end
 
-  describe "wrappers" do
+  describe "gem-empty" do
     before do
-      file = Tempfile.new('command-wrappers')
+      file = Tempfile.new('command-empty')
       @test_path = file.path
       file.close
       file.unlink
