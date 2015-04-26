@@ -1,7 +1,9 @@
 module GemEmpty
   module Specification
     def self.installed_gems
-      if Gem::VERSION > '1.8' then
+      if
+        Gem::VERSION > '1.8'
+      then
         Gem::Specification.to_a
       else
         Gem.source_index.map{|name,spec| spec}
