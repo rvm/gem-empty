@@ -9,15 +9,19 @@ describe GemEmpty::Specification do
   end
 
   it "finds specification" do
-    GemEmpty::Specification.find("gem-empty").name.must_equal("gem-empty")
-  end
-
-  it "gets specification version" do
-    GemEmpty::Specification.version.must_equal(GemEmpty::VERSION)
+    GemEmpty::Specification.find_gem_spec("gem-empty").name.must_equal("gem-empty")
   end
 
   it "does not find imaginary gems" do
-    GemEmpty::Specification.find("imaginary-gem").must_equal(nil)
+    GemEmpty::Specification.find_gem_spec("imaginary-gem").must_equal(nil)
+  end
+
+  it "confirms specification version" do
+    GemEmpty::Specification.gem_loaded?("gem-empty", GemEmpty::VERSION).must_equal true
+  end
+
+  it "does not confirms specification version" do
+    GemEmpty::Specification.gem_loaded?("gem-empty", "0.0.0").wont_equal true
   end
 
 end
