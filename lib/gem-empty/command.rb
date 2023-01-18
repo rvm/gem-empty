@@ -71,7 +71,7 @@ private
   def gem_dir_specs
     @gem_dir_specs ||=
     GemEmpty::Specification.installed_gems.select do |spec|
-      File.exists?( File.join( gem_install_dir, 'gems', spec.full_name ) )
+      File.exist?( File.join( gem_install_dir, 'gems', spec.full_name ) )
     end
   end
 
