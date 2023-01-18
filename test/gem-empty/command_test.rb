@@ -18,11 +18,11 @@ describe EmptyCommand do
   end
 
   it "has some strings" do
-    subject.arguments.class.must_equal(String)
-    subject.usage.class.must_equal(String)
-    subject.defaults_str.class.must_equal(String)
-    subject.description.class.must_equal(String)
-    subject.program_name.class.must_equal(String)
+    _(subject.arguments.class).must_equal(String)
+    _(subject.usage.class).must_equal(String)
+    _(subject.defaults_str.class).must_equal(String)
+    _(subject.description.class).must_equal(String)
+    _(subject.program_name.class).must_equal(String)
   end
 
   describe "gem-empty" do
@@ -49,24 +49,24 @@ describe EmptyCommand do
     end
 
     it "removes gems" do
-      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(true)
+      _(File.exist?(File.join(@test_path, "gems", @found_minitest.full_name))).must_equal(true)
       use_ui @ui do
         subject.execute(:install_dir => @test_path)
       end
-      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(false)
-      @ui.output.must_match(
+      _(File.exist?(File.join(@test_path, "gems", @found_minitest.full_name))).must_equal(false)
+      _(@ui.output).must_match(
         /Successfully uninstalled minitest-/
       )
-      @ui.error.must_equal("")
+      _(@ui.error).must_equal("")
     end
 
     it "removes git gems installed via bundler" do
-      File.exist?(@git_gem_file).must_equal(true)
+      _(File.exist?(@git_gem_file)).must_equal(true)
       use_ui @ui do
         subject.execute(:install_dir => @test_path)
       end
-      File.exist?(@git_gem_file).must_equal(false)
-      @ui.error.must_equal("")
+      _(File.exist?(@git_gem_file)).must_equal(false)
+      _(@ui.error).must_equal("")
     end
 
     it "fails gems" do
@@ -74,10 +74,10 @@ describe EmptyCommand do
       use_ui @ui do
         subject.execute(:install_dir => @test_path)
       end
-      File.exist?(File.join(@test_path, "gems", @found_minitest.full_name)).must_equal(true)
+      _(File.exist?(File.join(@test_path, "gems", @found_minitest.full_name))).must_equal(true)
       File.chmod(0755, File.join(@test_path) )
-      @ui.output.must_equal("")
-      @ui.error.must_match(
+      _(@ui.output).must_equal("")
+      _(@ui.error).must_match(
         /ERROR:  Gem::FilePermissionError: You don't have write permissions for the .* directory/
       )
     end
@@ -86,7 +86,7 @@ describe EmptyCommand do
 
   it "finds gem executables" do
     subject.stub :options, {:install_dir => Gem.dir } do
-      subject.send(:gem_dir_specs).map{|spec| spec.name}.must_include('minitest')
+      _(subject.send(:gem_dir_specs).map{|spec| spec.name}).must_include('minitest')
     end
   end
 
