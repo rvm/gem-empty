@@ -1,6 +1,4 @@
-if
-  RUBY_VERSION == "2.0.0" # check Gemfile
-then
+if RUBY_VERSION == "2.0.0" # check Gemfile
   require "coveralls"
   require "simplecov"
 

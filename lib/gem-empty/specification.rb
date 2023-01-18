@@ -2,9 +2,7 @@ module GemEmpty
   # monkey patch rubygems specification to easily find gem version
   module Specification
     def self.installed_gems
-      if
-        Gem::VERSION > '1.8'
-      then
+      if  Gem::VERSION > '1.8'
         Gem::Specification.to_a
       else
         Gem.source_index.map{|name,spec| spec}
