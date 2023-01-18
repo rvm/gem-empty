@@ -1,0 +1,43 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  job_test_gem:
+    name: Test in source tree
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows
+            ruby: "head"
+          - os: windows
+            ruby: "2.5"
+          - os: ubuntu
+            ruby: "head"
+          - os: ubuntu
+            ruby: "3.2"
+          - os: ubuntu
+            ruby: "2.5"
+          - os: macos
+            ruby: "head"
+
+    runs-on: ${{ matrix.os }}-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}      # passed to ruby/setup-ruby
+
+      - name: Print tool versions
+        run: |
+          ruby -v
+          gem env
+
+      - name: Bundle install
+        run: bundle install
+
+      - name: Run tests
+        run: bundle exec rake test
