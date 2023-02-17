@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.license = "Apache 2.0"
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.required_ruby_version = ">= 2.5"
   s.add_development_dependency("rake")
   s.add_development_dependency("minitest")
   # s.add_development_dependency("smf-gem")
