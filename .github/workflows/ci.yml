@@ -18,6 +18,14 @@ jobs:
           - os: ubuntu
             ruby: "3.2"
           - os: ubuntu
+            ruby: "3.1"
+          - os: ubuntu
+            ruby: "3.0"
+          - os: ubuntu
+            ruby: "2.7"
+          - os: ubuntu
+            ruby: "2.6"
+          - os: ubuntu
             ruby: "2.5"
           - os: macos
             ruby: "head"
