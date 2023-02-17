@@ -4,13 +4,6 @@ require 'rubygems/installer'
 require 'rubygems/user_interaction'
 require 'rubygems/mock_gem_ui'
 
-class Gem::Specification
-  singleton_class.undef_method :remove_spec
-  def self.remove_spec spec
-    true # fake the removal from _all
-  end
-end
-
 describe EmptyCommand do
   include Gem::DefaultUserInteraction
 
