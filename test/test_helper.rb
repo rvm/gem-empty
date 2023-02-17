@@ -1,19 +1,17 @@
-if RUBY_VERSION == "2.0.0" # check Gemfile
-  require "coveralls"
-  require "simplecov"
+require "coveralls"
+require "simplecov"
 
-  SimpleCov.start do
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      Coveralls::SimpleCov::Formatter,
-    ]
-    command_name "Unit Tests"
-    add_filter "/test/"
-    add_filter "/demo/"
-  end
-
-  Coveralls.noisy = true unless ENV['CI']
+SimpleCov.start do
+  formatter SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter,
+  ])
+  command_name "Unit Tests"
+  add_filter "/test/"
+  add_filter "/demo/"
 end
+
+Coveralls.noisy = true unless ENV['CI']
 
 require 'minitest/autorun'
 require 'minitest/unit'
