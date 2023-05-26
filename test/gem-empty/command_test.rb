@@ -4,9 +4,11 @@ require 'rubygems/installer'
 require 'rubygems/user_interaction'
 require 'rubygems/mock_gem_ui'
 
-class Gem::Specification
-  def self.remove_spec spec
-    true # fake the removal from _all
+if RUBY_VERSION < "2.3"
+  class Gem::Specification
+    def self.remove_spec spec
+      true # fake the removal from _all
+    end
   end
 end
 

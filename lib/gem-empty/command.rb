@@ -65,14 +65,14 @@ private
   end
 
   def remove_bundler_gems
-    FileUtils.rm_rf( File.join( gem_install_dir, 'bundler','gems' ) )
+    FileUtils.rm_rf(File.join(gem_install_dir, 'bundler', 'gems'))
   end
 
   def gem_dir_specs
     @gem_dir_specs ||=
-    GemEmpty::Specification.installed_gems.select do |spec|
-      File.exists?( File.join( gem_install_dir, 'gems', spec.full_name ) )
-    end
+      GemEmpty::Specification.installed_gems.select do |spec|
+        File.exist?(File.join(gem_install_dir, 'gems', spec.full_name))
+      end
   end
 
   def gem_install_dir
