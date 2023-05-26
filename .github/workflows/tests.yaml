@@ -28,12 +28,18 @@ jobs:
           - jruby
           - truffleruby
         os:
-          - windows
-          - ubuntu
           - macos
+          - ubuntu
+          - windows
         exclude:
-          - os: windows
-            ruby: 1.9
+          - ruby: 1.9
+            os: windows
+          - ruby: jruby
+            os: [ macos, windows ]
+          - ruby: truffleruby
+            os: [ macos, windows ]
+
+
 #        include:
 #          - os: windows
 #            ruby: "head"
