@@ -13,8 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
+          # Due to https://github.com/actions/runner/issues/849, 'x.0' versions have to use quotes
           - 1.9
-          - 2.0
+          - '2.0'
           - 2.1
           - 2.2
           - 2.3
@@ -22,7 +23,7 @@ jobs:
           - 2.5
           - 2.6
           - 2.7
-          - '3.0' # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.0'
+          - '3.0'
           - 3.1
           - head
           - jruby
@@ -31,6 +32,9 @@ jobs:
           - windows
           - ubuntu
           - macos
+        exclude:
+          - os: windows
+            ruby: 1.9
 #        include:
 #          - os: windows
 #            ruby: "head"
