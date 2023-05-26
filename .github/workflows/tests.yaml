@@ -35,9 +35,13 @@ jobs:
           - ruby: 1.9
             os: windows
           - ruby: jruby
-            os: [ macos, windows ]
+            os: macos
+          - ruby: jruby
+            os: windows
           - ruby: truffleruby
-            os: [ macos, windows ]
+            os: macos
+          - ruby: truffleruby
+            os: windows
 
     runs-on: ${{ matrix.os }}-latest
 
