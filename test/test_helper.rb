@@ -1,6 +1,7 @@
-if
-  RUBY_VERSION == "2.0.0" # check Gemfile
-then
+require "os"
+
+# Coverage only on newer ruby to avoid problems with older versions
+if RUBY_VERSION == "3.0.0" && !OS.windows? && !OS.mac?
   require "coveralls"
   require "simplecov"
 
