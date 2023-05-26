@@ -1,0 +1,65 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: ${{ matrix.ruby }}-${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - 1.9
+          - 2.0
+          - 2.1
+          - 2.2
+          - 2.3
+          - 2.4
+          - 2.5
+          - 2.6
+          - 2.7
+          - '3.0' # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.0'
+          - 3.1
+          - head
+          - jruby
+          - truffleruby
+        os:
+          - windows
+          - ubuntu
+          - macos
+#        include:
+#          - os: windows
+#            ruby: "head"
+#          - os: windows
+#            ruby: "2.5"
+#          - os: ubuntu
+#            ruby: "head"
+#          - os: ubuntu
+#            ruby: "3.2"
+#          - os: ubuntu
+#            ruby: "3.1"
+#          - os: ubuntu
+#            ruby: "3.0"
+#          - os: ubuntu
+#            ruby: "2.7"
+#          - os: ubuntu
+#            ruby: "2.6"
+#          - os: ubuntu
+#            ruby: "2.5"
+#          - os: macos
+#            ruby: "head"
+
+    runs-on: ${{ matrix.os }}-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: bundle install
+
+      - run: bundle exec rake test
