@@ -33,7 +33,7 @@ describe EmptyCommand do
       file.unlink
       @ui = Gem::MockGemUi.new
       @found_minitest = Gem::Specification.find_by_name('minitest')
-      package = RUBY_VERSION >= "2.0" ? Gem::Package.new(@found_minitest.cache_file) : @found_minitest.cache_file
+      package = RUBY_VERSION >= "2.5" ? Gem::Package.new(@found_minitest.cache_file) : @found_minitest.cache_file
       installer = Gem::Installer.new(package, :version => @found_minitest.version, :install_dir => @test_path)
       bundler_git_gems_path = File.join(@test_path,'bundler','gems')
       FileUtils.mkdir_p(bundler_git_gems_path)
