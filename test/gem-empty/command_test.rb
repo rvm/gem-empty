@@ -4,8 +4,7 @@ require 'rubygems/installer'
 require 'rubygems/user_interaction'
 require 'rubygems/mock_gem_ui'
 
-# This is needed by Ruby < 2.3
-if RUBY_VERSION < "2.4"
+if RUBY_VERSION < "2.3"
   class Gem::Specification
     def self.remove_spec spec
       true # fake the removal from _all
