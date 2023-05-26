@@ -39,29 +39,6 @@ jobs:
           - ruby: truffleruby
             os: [ macos, windows ]
 
-
-#        include:
-#          - os: windows
-#            ruby: "head"
-#          - os: windows
-#            ruby: "2.5"
-#          - os: ubuntu
-#            ruby: "head"
-#          - os: ubuntu
-#            ruby: "3.2"
-#          - os: ubuntu
-#            ruby: "3.1"
-#          - os: ubuntu
-#            ruby: "3.0"
-#          - os: ubuntu
-#            ruby: "2.7"
-#          - os: ubuntu
-#            ruby: "2.6"
-#          - os: ubuntu
-#            ruby: "2.5"
-#          - os: macos
-#            ruby: "head"
-
     runs-on: ${{ matrix.os }}-latest
 
     steps:
