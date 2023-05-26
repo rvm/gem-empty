@@ -1,0 +1,64 @@
+name: tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: ${{ matrix.ruby }}-${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          # Due to https://github.com/actions/runner/issues/849, 'x.0' versions have to use quotes
+          - '2.0'
+          - 2.1
+          - 2.2
+          - 2.3
+          - 2.4
+          - 2.5
+          - 2.6
+          - 2.7
+          - '3.0'
+          - 3.1
+          - jruby
+          - truffleruby
+        os:
+          - macos
+          - ubuntu
+          - windows
+        exclude:
+          - ruby: 2.2 # Fails on setup: https://github.com/rvm/gem-empty/actions/runs/5094962600/jobs/9159397472
+            os: ubuntu
+          - ruby: 2.7 # Fails only on macos: https://github.com/rvm/gem-empty/actions/runs/5094962600/jobs/9159397472
+            os: macos
+          - ruby: 3.0 # Fails only on macos: https://github.com/rvm/gem-empty/actions/runs/5094962600/jobs/9159398902
+            os: macos
+          - ruby: 3.1 # Fails only on macos: https://github.com/rvm/gem-empty/actions/runs/5094962600/jobs/9159399155
+            os: macos
+          - ruby: jruby
+            os: macos
+          - ruby: jruby
+            os: windows
+          - ruby: truffleruby
+            os: macos
+          - ruby: truffleruby
+            os: windows
+
+    runs-on: ${{ matrix.os }}-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: bundle install
+
+      - run: bundle exec rake test
